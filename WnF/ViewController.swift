@@ -8,12 +8,16 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    var networkWeatherManager = NetworkWeatherManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        networkWeatherManager.fetchWeather()
+        networkWeatherManager.omCompletion = { weather in
+            print(weather)
+        }
     }
-
-
+    
 }
 
