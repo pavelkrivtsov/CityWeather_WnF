@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import CoreLocation
+
 
 class ViewController: UIViewController {
     
@@ -13,11 +15,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        networkWeatherManager.fetchWeather()
-        networkWeatherManager.omCompletion = { weather in
-            print(weather)
-        }
+        
     }
     
+    func getCityCoordinates(ofCity city: String,
+                            onCompletion: @escaping (_ coordinate: CLLocationCoordinate2D?, _ error: Error?) -> ()) {
+        CLGeocoder().geocodeAddressString(city) { placemark, error in
+            onCompletion(placemark?.first?.location?.coordinate, error)
+        }
+    }
 }
 

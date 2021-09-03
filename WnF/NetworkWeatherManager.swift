@@ -7,12 +7,11 @@
 
 import Foundation
 
+
 class NetworkWeatherManager {
     
-    var omCompletion: ((Weather) -> Void)?
-    
-    func fetchWeather() {
-        let urlString = "https://api.weather.yandex.ru/v2/forecast?lat=55.75396&lon=37.620393&ru_RU"
+    func fetchWeather(latitude: Double, longitude: Double, onCompletion: @escaping (Weather) -> ()) {
+        let urlString = "https://api.weather.yandex.ru/v2/forecast?lat=\(latitude)&lon=\(longitude)"
         guard let url = URL(string: urlString) else { return }
         
         var request = URLRequest(url: url)
@@ -22,20 +21,19 @@ class NetworkWeatherManager {
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: request) { data, response, error in
             if let data = data {
-                if let weather = self.parseJSOM(withData: data) {
-                    self.omCompletion?(weather)
+                if let weather = self.parseJSON(withData: data) {
+                    onCompletion(weather)
                 }
             }
         }
         task.resume()
     }
     
-    private func parseJSOM(withData data: Data) -> Weather? {
+    private func parseJSON(withData data: Data) -> Weather? {
         let decoder = JSONDecoder()
-        
         do {
             let weatherData = try decoder.decode(WeatherData.self, from: data)
-            guard let weather = Weather(withWeatherData: weatherData) else { return nil }
+            guard let weather = Weather(fromWeatherData: weatherData) else { return nil }
             return weather
         } catch let error as NSError {
             print(error.localizedDescription)

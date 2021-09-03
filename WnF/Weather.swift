@@ -10,14 +10,16 @@ import Foundation
 
 struct Weather {
     
+    var name: String = "Название города"
     var url: String
     var temp: Int
+    var feelsLike: Int
     var tempMin: Int = 0
     var tempMax: Int = 0
+    var windSpeed: Double
+    var pressureMm: Int
     var condition: String
     var conditionCode: String
-    var windSpeed: Int
-    var pressureMm: Int
     
     var conditionString: String {
         switch condition {
@@ -44,14 +46,15 @@ struct Weather {
         }
     }
     
-    init?(withWeatherData weatherdata: WeatherData) {
+    init?(fromWeatherData weatherdata: WeatherData) {
         self.url = weatherdata.info.url
         self.temp = weatherdata.fact.temp
-        self.condition = weatherdata.fact.condition
-        self.conditionCode = weatherdata.fact.icon
-        self.windSpeed = weatherdata.fact.windSpeed
-        self.pressureMm = weatherdata.fact.pressureMm
+        self.feelsLike = weatherdata.fact.feelsLike
         self.tempMin = weatherdata.forecasts.first!.parts.day.tempMin!
         self.tempMax = weatherdata.forecasts.first!.parts.day.tempMax!
+        self.windSpeed = weatherdata.fact.windSpeed
+        self.pressureMm = weatherdata.fact.pressureMm
+        self.condition = weatherdata.fact.condition
+        self.conditionCode = weatherdata.fact.icon
     }
 }
