@@ -6,23 +6,34 @@
 //
 
 import UIKit
-import CoreLocation
 
 
 class ViewController: UIViewController {
+    
+    let emptyCity = Weather()
+    
+    var citiesArray = [Weather]()
+    let cityNamesArray = ["Москва", "Лондон", "Вашингтон", "Пекин"] 
     
     var networkWeatherManager = NetworkWeatherManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if citiesArray.isEmpty {
+            citiesArray = Array(repeating: emptyCity, count: cityNamesArray.count)
+        }
+        addCities()
     }
     
-    func getCityCoordinates(ofCity city: String,
-                            onCompletion: @escaping (_ coordinate: CLLocationCoordinate2D?, _ error: Error?) -> ()) {
-        CLGeocoder().geocodeAddressString(city) { placemark, error in
-            onCompletion(placemark?.first?.location?.coordinate, error)
+    func addCities() {
+        getCityWeahter(citiesArray: cityNamesArray) { index, weather in
+            self.citiesArray[index] = weather
+            self.citiesArray[index].name = self.cityNamesArray[index]
+            print(self.citiesArray)
         }
     }
+    
+    
 }
 
