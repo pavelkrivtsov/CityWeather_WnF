@@ -12,12 +12,11 @@ struct Weather {
     
     var name: String = "Название города"
     var url: String = ""
-    var temp: Int = 0
+    var temperature: Int = 0
     var feelsLike: Int = 0
-    var tempMin: Int = 0
-    var tempMax: Int = 0
-    var windSpeed: Double = 0
     var pressureMm: Int = 0
+    var humidity: Int = 0
+    var windSpeed: Double = 0
     var condition: String = ""
     var conditionCode: String = ""
     
@@ -48,14 +47,13 @@ struct Weather {
     
     init?(fromWeatherData weatherdata: WeatherData) {
         self.url = weatherdata.info.url
-        self.temp = weatherdata.fact.temp
+        self.temperature = weatherdata.fact.temp
         self.feelsLike = weatherdata.fact.feelsLike
-        self.tempMin = weatherdata.forecasts.first!.parts.day.tempMin!
-        self.tempMax = weatherdata.forecasts.first!.parts.day.tempMax!
         self.windSpeed = weatherdata.fact.windSpeed
         self.pressureMm = weatherdata.fact.pressureMm
         self.condition = weatherdata.fact.condition
         self.conditionCode = weatherdata.fact.icon
+        self.humidity = weatherdata.fact.humidity
     }
     
     init() {    

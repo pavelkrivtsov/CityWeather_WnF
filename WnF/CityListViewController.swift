@@ -11,10 +11,8 @@ import UIKit
 class ViewController: UIViewController {
     
     let emptyCity = Weather()
-    
     var citiesArray = [Weather]()
-    let cityNamesArray = ["Москва", "Лондон", "Вашингтон", "Пекин"] 
-    
+    let cityNamesArray = ["Москва", "Лондон", "Вашингтон", "Пекин"]
     var networkWeatherManager = NetworkWeatherManager()
     
     override func viewDidLoad() {

@@ -11,7 +11,6 @@ import Foundation
 struct WeatherData: Decodable {
     let info: Info
     let fact: Fact
-    let forecasts: [Forecast]
 }
 
 struct Info: Decodable {
@@ -24,6 +23,7 @@ struct Fact: Decodable {
     let condition: String
     let windSpeed: Double
     let pressureMm: Int
+    let humidity: Int
     
     enum CodingKeys: String, CodingKey {
         case temp
@@ -32,23 +32,6 @@ struct Fact: Decodable {
         case condition
         case windSpeed = "wind_speed"
         case pressureMm = "pressure_mm"
-    }
-}
-
-struct Forecast: Decodable {
-    let parts: Parts
-}
-
-struct Parts: Decodable {
-    let day: Hour
-}
-
-struct Hour: Decodable {
-    let tempMin: Int?
-    let tempMax: Int?
-    
-    enum CodingKeys: String, CodingKey {
-        case tempMin = "temp_min"
-        case tempMax = "temp_max"
+        case humidity
     }
 }
