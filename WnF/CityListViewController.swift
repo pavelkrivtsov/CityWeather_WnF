@@ -13,14 +13,14 @@ class CityListViewController: UITableViewController {
     let emptyCity = Weather()
     var citiesArray = [Weather]()
     let cityNamesArray = ["Москва", "Лондон", "Вашингтон", "Пекин", "Токио",
-                          "Сидней", "Кейптаун", "Рио-де-Жанейро", "Таиланд", "Стамбул"]
+                          "Сидней", "Кейптаун", "Рио-де-Жанейро", "Бангкок", "Стамбул"]
     var networkWeatherManager = NetworkWeatherManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "WnF"
         
         tableView.register(CityWeahterCell.self, forCellReuseIdentifier: "CityWeahterCell")
+        tableView.separatorInset = .zero
         tableView.tableFooterView = UIView()
         
         if citiesArray.isEmpty {
@@ -60,6 +60,20 @@ class CityListViewController: UITableViewController {
         let detailCityWeatherVC = DetailCityWeatherVC()
         detailCityWeatherVC.weatherModel = weather
         self.navigationController?.pushViewController(detailCityWeatherVC, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) ->
+    UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { _, _, _ in
+            let city = self.cityNamesArray[indexPath.row]
+            if let index = self.cityNamesArray.firstIndex(of: city) {
+                self.citiesArray.remove(at: index)
+            }
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        let swipe = UISwipeActionsConfiguration(actions: [deleteAction])
+        return swipe
     }
     
 }
