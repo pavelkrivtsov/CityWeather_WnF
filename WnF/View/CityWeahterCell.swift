@@ -7,19 +7,16 @@
 
 import UIKit
 
+
 class CityWeahterCell: UITableViewCell {
     
     var mainStack = UIStackView()
-    var verticalStack = UIStackView()
     var cityName = UILabel()
     var cityDiscriptionWeather = UILabel()
-    var horizontalStack = UIStackView()
     var weatherTemperature = UILabel()
-    var iconWeatherDiscription = UIImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
         contentView.addSubview(mainStack)
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
@@ -27,39 +24,28 @@ class CityWeahterCell: UITableViewCell {
         mainStack.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         
-        mainStack.addArrangedSubview(verticalStack)
-        mainStack.addArrangedSubview(horizontalStack)
+        mainStack.addArrangedSubview(cityName)
+        mainStack.addArrangedSubview(cityDiscriptionWeather)
+        mainStack.addArrangedSubview(weatherTemperature)
         mainStack.spacing = 5
-
-        verticalStack.axis = .vertical
-        verticalStack.distribution = .fillProportionally
-        verticalStack.addArrangedSubview(cityName)
-        verticalStack.addArrangedSubview(cityDiscriptionWeather)
+        mainStack.axis = .horizontal
+        mainStack.distribution = .fill
         
-        cityName.backgroundColor = .magenta
         cityName.text = "Название города"
         cityName.font = UIFont(name: "AvenirNext-Medium", size: 20)
-        cityName.textAlignment = .center
-        cityDiscriptionWeather.backgroundColor = .cyan
-        cityDiscriptionWeather.text = "Описание погоды"
-        cityDiscriptionWeather.font = UIFont(name: "AvenirNext-Regular", size: 15)
-        cityDiscriptionWeather.textAlignment = .center
-                
-        horizontalStack.axis = .horizontal
-        horizontalStack.addArrangedSubview(iconWeatherDiscription)
-        horizontalStack.addArrangedSubview(weatherTemperature)
+        cityName.textAlignment = .left
+        cityName.numberOfLines = 0
         
+        cityDiscriptionWeather.text = "Описание погоды"
+        cityDiscriptionWeather.font = UIFont(name: "AvenirNext-UltraLight", size: 15)
+        cityDiscriptionWeather.numberOfLines = 0
+        cityDiscriptionWeather.textAlignment = .right
+        cityDiscriptionWeather.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3).isActive = true
+        
+        weatherTemperature.font = UIFont(name: "AvenirNext-Regular", size: 20)
         weatherTemperature.text = "°C"
         weatherTemperature.textAlignment = .center
-        weatherTemperature.backgroundColor = .orange
-        weatherTemperature.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        weatherTemperature.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        iconWeatherDiscription.backgroundColor = .green
-        iconWeatherDiscription.image = UIImage(systemName: "smoke.fill")
-        iconWeatherDiscription.contentMode = .scaleAspectFit
-        iconWeatherDiscription.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        iconWeatherDiscription.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        weatherTemperature.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.15).isActive = true
     }
     
     required init?(coder: NSCoder) {
@@ -70,6 +56,6 @@ class CityWeahterCell: UITableViewCell {
         self.cityName.text = weather.name
         self.cityDiscriptionWeather.text = weather.conditionString
         self.weatherTemperature.text = "\(weather.temperature)°C"
-        self.iconWeatherDiscription.image = UIImage(named: weather.conditionCode)
     }
 }
+

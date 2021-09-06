@@ -7,9 +7,11 @@
 
 import UIKit
 
+
 class DetailCityWeatherVC: UIViewController {
     
     let mainWeatherView = UIView()
+    let newTitleFont = UILabel()
     let weatherIcon = UIImageView()
     var temperature = UILabel()
     let feelsLikeTemperature = UILabel()
@@ -49,9 +51,7 @@ class DetailCityWeatherVC: UIViewController {
         mainWeatherView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
         mainWeatherView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
-        weatherIcon.image = UIImage(systemName: "sun.max.fill")
         weatherIcon.contentMode = .scaleAspectFit
-        weatherIcon.tintColor = UIColor(named: "SymbolColor")
         mainWeatherView.addSubview(weatherIcon)
         weatherIcon.translatesAutoresizingMaskIntoConstraints = false
         weatherIcon.topAnchor.constraint(equalTo: mainWeatherView.topAnchor, constant: 20).isActive = true
@@ -62,7 +62,7 @@ class DetailCityWeatherVC: UIViewController {
         temperature.text = "°C"
         temperature.adjustsFontSizeToFitWidth = true
         temperature.numberOfLines = 0
-        temperature.font = UIFont(name: "Avenir Black", size: 65)
+        temperature.font = UIFont(name: "AvenirNext-Bold", size: 65)
         temperature.textColor = UIColor(named: "TextColor")
         mainWeatherView.addSubview(temperature)
         temperature.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +74,7 @@ class DetailCityWeatherVC: UIViewController {
         feelsLikeTemperature.text = "Ощущается как"
         feelsLikeTemperature.adjustsFontSizeToFitWidth = true
         feelsLikeTemperature.numberOfLines = 0
-        feelsLikeTemperature.font = UIFont(name: "Avenir", size: 15)
+        feelsLikeTemperature.font = UIFont(name: "AvenirNext-Regular", size: 15)
         feelsLikeTemperature.textColor = UIColor(named: "TextColor")
         mainWeatherView.addSubview(feelsLikeTemperature)
         feelsLikeTemperature.translatesAutoresizingMaskIntoConstraints = false
@@ -83,10 +83,11 @@ class DetailCityWeatherVC: UIViewController {
         feelsLikeTemperature.topAnchor.constraint(equalTo: mainWeatherView.centerYAnchor).isActive = true
         feelsLikeTemperature.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
+        //        weatherDescription.backgroundColor = .green
         weatherDescription.text = "Описание погоды"
         weatherDescription.adjustsFontSizeToFitWidth = true
         weatherDescription.numberOfLines = 0
-        weatherDescription.font = UIFont(name: "Avenir Medium", size: 20)
+        weatherDescription.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
         weatherDescription.textColor = UIColor(named: "TextColor")
         mainWeatherView.addSubview(weatherDescription)
         weatherDescription.translatesAutoresizingMaskIntoConstraints = false
@@ -127,7 +128,7 @@ class DetailCityWeatherVC: UIViewController {
         pressure.contentMode = .scaleAspectFill
         pressureValue.text = "мм"
         pressureValue.adjustsFontSizeToFitWidth = true
-        pressureValue.font = UIFont(name: "Avenir-Heavy", size: 20)
+        pressureValue.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
         
         humidityStack.axis = .vertical
         humidityStack.spacing = 5
@@ -139,7 +140,7 @@ class DetailCityWeatherVC: UIViewController {
         humidity.contentMode = .scaleAspectFill
         humidityValue.text = "%"
         humidityValue.adjustsFontSizeToFitWidth = true
-        humidityValue.font = UIFont(name: "Avenir-Heavy", size: 20)
+        humidityValue.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
         
         windSpeedStack.axis = .vertical
         windSpeedStack.spacing = 5
@@ -149,9 +150,9 @@ class DetailCityWeatherVC: UIViewController {
         windSpeedStack.addArrangedSubview(windSpeedValue)
         windSpeed.image = UIImage(systemName: "wind")
         windSpeed.contentMode = .scaleAspectFill
-        windSpeedValue.text = "м/сек"
+        windSpeedValue.text = "м/с"
         windSpeedValue.adjustsFontSizeToFitWidth = true
-        windSpeedValue.font = UIFont(name: "Avenir-Heavy", size: 20)
+        windSpeedValue.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
         
         setupDetailCityWeather()
     }
@@ -161,10 +162,9 @@ class DetailCityWeatherVC: UIViewController {
         self.temperature.text = "\(weatherModel.temperature)°C"
         self.feelsLikeTemperature.text = "Ощущается как \(weatherModel.feelsLike)°C"
         self.weatherDescription.text = weatherModel.conditionString
-        self.weatherIcon.image = UIImage(named: weatherModel.conditionCode)
+        self.weatherIcon.image = UIImage(systemName: weatherModel.conditionIcon)
         self.pressureValue.text = "\(weatherModel.pressureMm)мм"
         self.humidityValue.text = "\(weatherModel.humidity)%"
-        self.windSpeedValue.text = "\(weatherModel.windSpeed)м/сек"
+        self.windSpeedValue.text = "\(weatherModel.windSpeed)м/c"
     }
-    
 }

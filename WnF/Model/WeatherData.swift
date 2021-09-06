@@ -19,7 +19,6 @@ struct Info: Decodable {
 
 struct Fact: Decodable {
     let temp, feelsLike: Int
-    let icon: String
     let condition: String
     let windSpeed: Double
     let pressureMm: Int
@@ -28,7 +27,6 @@ struct Fact: Decodable {
     enum CodingKeys: String, CodingKey {
         case temp
         case feelsLike = "feels_like"
-        case icon
         case condition
         case windSpeed = "wind_speed"
         case pressureMm = "pressure_mm"

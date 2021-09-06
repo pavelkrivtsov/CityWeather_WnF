@@ -18,7 +18,31 @@ struct Weather {
     var humidity: Int = 0
     var windSpeed: Double = 0
     var condition: String = ""
-    var conditionCode: String = ""
+    
+    var conditionIcon: String {
+        switch condition {
+        case "clear": return "moon.stars.fill"
+        case "partly-cloudy": return "cloud.sun.fill"
+        case "cloudy": return "cloud.fill"
+        case "overcast": return "cloud.sun.rain.fill"
+        case "drizzle": return "cloud.drizzle.fill"
+        case "light-rain": return "cloud.rain.fill"
+        case "rain": return "cloud.rain.fill"
+        case "moderate-rain": return "cloud.rain.fill"
+        case "heavy-rain": return "cloud.heavyrain.fill"
+        case "continuous-heavy-rain": return "cloud.heavyrain.fill"
+        case "showers": return "cloud.heavyrain.fill"
+        case "wet-snow": return "cloud.snow.fill"
+        case "light-snow": return "cloud.snow.fill"
+        case "snow": return "cloud.snow.fill"
+        case "snow-showers": return "cloud.snow.fill"
+        case "hail": return "cloud.hail.fill"
+        case "thunderstorm": return "cloud.bolt.fill"
+        case "thunderstorm-with-rain": return "cloud.bolt.rain.fill"
+        case "thunderstorm-with-hail": return "cloud.hail.fill"
+        default: return "Описание погоды"
+        }
+    }
     
     var conditionString: String {
         switch condition {
@@ -52,10 +76,8 @@ struct Weather {
         self.windSpeed = weatherdata.fact.windSpeed
         self.pressureMm = weatherdata.fact.pressureMm
         self.condition = weatherdata.fact.condition
-        self.conditionCode = weatherdata.fact.icon
         self.humidity = weatherdata.fact.humidity
     }
     
-    init() {    
-    }
+    init() {}
 }
