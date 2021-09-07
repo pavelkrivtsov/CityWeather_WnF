@@ -6,20 +6,43 @@
 //
 
 import Foundation
+import CoreLocation
 
 
 class NetworkWeatherManager {
     
-    func fetchWeather(latitude: Double, longitude: Double, onCompletion: @escaping (Weather) -> ()) {
+    func getCityWeahter(citiesArray: [String], completionHeandler: @escaping (Int, Weather) -> ()) {
+        for (index, city) in citiesArray.enumerated() {
+            getCityCoordinates(ofCity: city) { [weak self] coordinate, error in
+                guard let self = self else { return }
+                guard let coordinate = coordinate, error == nil else { return }
+               
+                self.fetchWeather(latitude: coordinate.latitude, longitude: coordinate.longitude) { weather in
+                    completionHeandler(index, weather)
+                }
+            }
+        }
+    }
+    
+    private func getCityCoordinates(ofCity city: String,
+                            onCompletion: @escaping (_ coordinate: CLLocationCoordinate2D?, _ error: Error?) -> ()) {
+        CLGeocoder().geocodeAddressString(city) { placemark, error in
+            onCompletion(placemark?.first?.location?.coordinate, error)
+        }
+    }
+    
+    private func fetchWeather(latitude: Double, longitude: Double, onCompletion: @escaping (Weather) -> ()) {
+        
         let urlString = "https://api.weather.yandex.ru/v2/forecast?lat=\(latitude)&lon=\(longitude)"
         guard let url = URL(string: urlString) else { return }
         
         var request = URLRequest(url: url)
         request.addValue(apiKey, forHTTPHeaderField: HTTPHeader)
         request.httpMethod = "GET"
-        
+
         let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: request) { data, response, error in
+        let task = session.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else { return }
             if let data = data {
                 if let weather = self.parseJSON(withData: data) {
                     onCompletion(weather)

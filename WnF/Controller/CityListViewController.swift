@@ -10,19 +10,24 @@ import UIKit
 
 class CityListViewController: UITableViewController {
     
-    let emptyCity = Weather()
     var citiesArray = [Weather]()
     var filtredCityArray = [Weather]()
     var cityNamesArray = ["Москва", "Лондон", "Вашингтон", "Пекин", "Токио",
                           "Сидней", "Кейптаун", "Рио-де-Жанейро", "Бангкок", "Стамбул"]
     let addButtonAction = UIBarButtonItem(systemItem: .add)
     let searchController = UISearchController()
+    var networkWeatherManager = NetworkWeatherManager()
+    
+    var cities: [Weather] {
+        isFiltering ? filtredCityArray : citiesArray
+    }
+    
     var searchBarisEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
     }
     var isFiltering: Bool {
-        return searchController.isActive && !searchBarisEmpty
+        searchController.isActive && !searchBarisEmpty
     }
     
     let titleFont = UILabel()
@@ -31,23 +36,26 @@ class CityListViewController: UITableViewController {
         super.viewDidLoad()
         
         let label = UILabel()
-        label.font = UIFont(name: "SacramentoProSlim", size: 30)
+        label.font = UIFont(name: "SacramentoPro-Regular", size: 34)
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = #colorLiteral(red: 0.8980392157, green: 0.2156862745, blue: 0.568627451, alpha: 1)
         label.text = "City Weather"
         self.navigationItem.titleView = label
         
         addButtonAction.target = self
         addButtonAction.action = #selector(addNewCityWeather)
         navigationItem.rightBarButtonItem = addButtonAction
+        navigationItem.rightBarButtonItem?.tintColor = .black
         
         tableView.register(CityWeahterCell.self, forCellReuseIdentifier: "CityWeahterCell")
         tableView.separatorInset = .zero
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 60
         
-        if citiesArray.isEmpty {
-            citiesArray = Array(repeating: emptyCity, count: cityNamesArray.count)
+        citiesArray = cityNamesArray.map { cityName in
+            var weather = Weather()
+            weather.name = cityName
+            return weather
         }
         addCities()
         
@@ -60,7 +68,8 @@ class CityListViewController: UITableViewController {
     }
     
     func addCities() {
-        getCityWeahter(citiesArray: cityNamesArray) { index, weather in
+        networkWeatherManager.getCityWeahter(citiesArray: cityNamesArray) { [weak self] index, weather in
+            guard let self = self else { return }
             self.citiesArray[index] = weather
             self.citiesArray[index].name = self.cityNamesArray[index]
             DispatchQueue.main.async {
@@ -84,9 +93,8 @@ class CityListViewController: UITableViewController {
             guard let cityName = textField?.text else { return }
             if cityName.isEmpty == false {
                 let city = cityName.split(separator: " ").joined(separator: "%20")
-                
                 self.cityNamesArray.append(city)
-                self.citiesArray.append(self.emptyCity)
+                self.citiesArray.append(Weather())
                 self.addCities()
             }
         }
@@ -95,16 +103,16 @@ class CityListViewController: UITableViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    //    MARK: TableView DataSource and Delegate
+    
+    //    MARK: TableView data sourse
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let rowsInSection = isFiltering ? filtredCityArray.count : citiesArray.count
-        return rowsInSection
+        cities.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CityWeahterCell", for: indexPath) as? CityWeahterCell {
-            let weather = isFiltering ? filtredCityArray[indexPath.row] : citiesArray[indexPath.row]
+            let weather = cities[indexPath.row]
             cell.configure(from: weather)
             return cell
         }
@@ -112,7 +120,7 @@ class CityListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let weather = isFiltering ? filtredCityArray[indexPath.row] : citiesArray[indexPath.row]
+        let weather = cities[indexPath.row]
         let detailCityWeatherVC = DetailCityWeatherVC()
         detailCityWeatherVC.weatherModel = weather
         self.navigationController?.pushViewController(detailCityWeatherVC, animated: true)
@@ -122,20 +130,16 @@ class CityListViewController: UITableViewController {
     UISwipeActionsConfiguration? {
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { _, _, _ in
-            let city = self.cityNamesArray[indexPath.row]
-            if let index = self.cityNamesArray.firstIndex(of: city) {
-                if self.isFiltering {
-                    self.filtredCityArray.remove(at: index)
-                } else {
-                    self.citiesArray.remove(at: index)
-                }
-            }
+            let city = self.cities[indexPath.row].name
+            self.citiesArray = self.citiesArray.filter { $0.name != city }
+            self.filtredCityArray = self.filtredCityArray.filter { weather in weather.name != city }
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let swipe = UISwipeActionsConfiguration(actions: [deleteAction])
         return swipe
     }
 }
+
 
 extension CityListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {

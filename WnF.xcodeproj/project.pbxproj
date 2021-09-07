@@ -12,9 +12,9 @@
 		1E1FC42726DFF69500F6964A /* CityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1FC42626DFF69500F6964A /* CityListViewController.swift */; };
 		1E1FC42C26DFF69600F6964A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E1FC42B26DFF69600F6964A /* Assets.xcassets */; };
 		1E1FC42F26DFF69600F6964A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E1FC42D26DFF69600F6964A /* LaunchScreen.storyboard */; };
-		1E4EB40C26E3F49E00CEC70B /* GetCitiesWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4EB40B26E3F49E00CEC70B /* GetCitiesWeather.swift */; };
 		1E52D6C026E6749D0053F03F /* SacramentoProSlim.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E52D6BF26E6749D0053F03F /* SacramentoProSlim.ttf */; };
 		1E652C3D26E519BA000627F9 /* DetailCityWeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E652C3C26E519BA000627F9 /* DetailCityWeatherVC.swift */; };
+		1E869F9326E6D37D008B1CF6 /* SacramentoPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E869F9226E6D37D008B1CF6 /* SacramentoPro-Regular.ttf */; };
 		1EAFA5D726E12AC7006987CC /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAFA5D626E12AC7006987CC /* Constant.swift */; };
 		1EAFA5D926E12DAE006987CC /* NetworkWeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAFA5D826E12DAE006987CC /* NetworkWeatherManager.swift */; };
 		1EAFA5DB26E12E46006987CC /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAFA5DA26E12E46006987CC /* WeatherData.swift */; };
@@ -30,9 +30,9 @@
 		1E1FC42B26DFF69600F6964A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E1FC42E26DFF69600F6964A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1E1FC43026DFF69600F6964A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1E4EB40B26E3F49E00CEC70B /* GetCitiesWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCitiesWeather.swift; sourceTree = "<group>"; };
 		1E52D6BF26E6749D0053F03F /* SacramentoProSlim.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SacramentoProSlim.ttf; sourceTree = "<group>"; };
 		1E652C3C26E519BA000627F9 /* DetailCityWeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCityWeatherVC.swift; sourceTree = "<group>"; };
+		1E869F9226E6D37D008B1CF6 /* SacramentoPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SacramentoPro-Regular.ttf"; sourceTree = "<group>"; };
 		1EAFA5D626E12AC7006987CC /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		1EAFA5D826E12DAE006987CC /* NetworkWeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWeatherManager.swift; sourceTree = "<group>"; };
 		1EAFA5DA26E12E46006987CC /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
@@ -73,7 +73,6 @@
 				1E52D6BB26E66DB70053F03F /* Model */,
 				1E52D6BC26E66DC10053F03F /* View */,
 				1E52D6BD26E66DF00053F03F /* Controller */,
-				1E4EB40B26E3F49E00CEC70B /* GetCitiesWeather.swift */,
 				1EAFA5D826E12DAE006987CC /* NetworkWeatherManager.swift */,
 				1EAFA5D526E129CA006987CC /* Supporting files */,
 			);
@@ -110,6 +109,7 @@
 		1E52D6BE26E6747C0053F03F /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				1E869F9226E6D37D008B1CF6 /* SacramentoPro-Regular.ttf */,
 				1E52D6BF26E6749D0053F03F /* SacramentoProSlim.ttf */,
 			);
 			path = Fonts;
@@ -187,6 +187,7 @@
 			files = (
 				1E52D6C026E6749D0053F03F /* SacramentoProSlim.ttf in Resources */,
 				1E1FC42F26DFF69600F6964A /* LaunchScreen.storyboard in Resources */,
+				1E869F9326E6D37D008B1CF6 /* SacramentoPro-Regular.ttf in Resources */,
 				1E1FC42C26DFF69600F6964A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,7 +201,6 @@
 			files = (
 				1E1FC42726DFF69500F6964A /* CityListViewController.swift in Sources */,
 				1E1FC42326DFF69400F6964A /* AppDelegate.swift in Sources */,
-				1E4EB40C26E3F49E00CEC70B /* GetCitiesWeather.swift in Sources */,
 				1E652C3D26E519BA000627F9 /* DetailCityWeatherVC.swift in Sources */,
 				1EAFA5D926E12DAE006987CC /* NetworkWeatherManager.swift in Sources */,
 				1E1FC42526DFF69500F6964A /* SceneDelegate.swift in Sources */,
@@ -353,7 +353,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = PavelKrivtsov.WnF;
+				PRODUCT_BUNDLE_IDENTIFIER = "PavelKrivtsov.City-Weather";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -372,7 +372,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = PavelKrivtsov.WnF;
+				PRODUCT_BUNDLE_IDENTIFIER = "PavelKrivtsov.City-Weather";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
