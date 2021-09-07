@@ -1,4 +1,4 @@
-# <img src="https://user-images.githubusercontent.com/72617749/132324425-619a0e3c-3b1f-4f68-8cd5-fdc1db236049.png" width="65" height="65" /> WeatherApp
+# <img src="https://user-images.githubusercontent.com/72617749/132324425-619a0e3c-3b1f-4f68-8cd5-fdc1db236049.png" width="65" height="65" /> City Weather
 
 Тестовое задание: Приложение погоды
 
