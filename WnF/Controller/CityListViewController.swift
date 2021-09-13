@@ -22,12 +22,12 @@ class CityListViewController: UITableViewController {
         isFiltering ? filtredCityArray : citiesArray
     }
     
-    var searchBarisEmpty: Bool {
+    var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
     }
     var isFiltering: Bool {
-        searchController.isActive && !searchBarisEmpty
+        searchController.isActive && !searchBarIsEmpty
     }
     
     let titleFont = UILabel()
@@ -92,15 +92,24 @@ class CityListViewController: UITableViewController {
             let textField = alertController.textFields?.first
             guard let cityName = textField?.text else { return }
             if cityName.isEmpty == false {
-                let city = cityName.split(separator: " ").joined(separator: "%20")
-                self.cityNamesArray.append(city)
-                self.citiesArray.append(Weather())
-                self.addCities()
+                if self.cityNamesArray.contains(cityName) {
+                    let ac = UIAlertController(title: "Город есть в списке",
+                                               message: "Попобуйте найти другой город",
+                                               preferredStyle: .alert)
+                    let cansel = UIAlertAction(title: "Отмена", style: .cancel)
+                    ac.addAction(cansel)
+                    self.present(ac, animated: true)
+                } else {
+                    let city = cityName.split(separator: " ").joined(separator: "%20")
+                    self.cityNamesArray.append(city)
+                    self.citiesArray.append(Weather())
+                    self.addCities()
+                }
             }
         }
         alertController.addAction(cancel)
         alertController.addAction(search)
-        present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true)
     }
     
     
@@ -131,8 +140,9 @@ class CityListViewController: UITableViewController {
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { _, _, _ in
             let city = self.cities[indexPath.row].name
+            self.cityNamesArray = self.cityNamesArray.filter { $0 != city }
             self.citiesArray = self.citiesArray.filter { $0.name != city }
-            self.filtredCityArray = self.filtredCityArray.filter { weather in weather.name != city }
+            self.filtredCityArray = self.filtredCityArray.filter { $0.name != city }
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let swipe = UISwipeActionsConfiguration(actions: [deleteAction])
@@ -147,9 +157,7 @@ extension CityListViewController: UISearchResultsUpdating {
     }
     
     private func filterContentForSearchText(_ searchText: String) {
-        filtredCityArray = citiesArray.filter({
-            $0.name.contains(searchText)
-        })
+        filtredCityArray = citiesArray.filter { $0.name.contains(searchText) }
         tableView.reloadData()
     }
 }

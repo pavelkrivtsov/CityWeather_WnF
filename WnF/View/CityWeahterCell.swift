@@ -42,8 +42,8 @@ class CityWeahterCell: UITableViewCell {
         cityDiscriptionWeather.textAlignment = .right
         cityDiscriptionWeather.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3).isActive = true
         
-        weatherTemperature.font = UIFont(name: "AvenirNext-Regular", size: 20)
         weatherTemperature.text = "°C"
+        weatherTemperature.font = UIFont(name: "AvenirNext-Regular", size: 20)
         weatherTemperature.textAlignment = .center
         weatherTemperature.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.15).isActive = true
     }
