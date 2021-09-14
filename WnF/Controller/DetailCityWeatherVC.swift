@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class DetailCityWeatherVC: UIViewController {
     
     let mainWeatherView = UIView()
@@ -29,93 +28,50 @@ class DetailCityWeatherVC: UIViewController {
     let windSpeedStack = UIStackView()
     let backgroundImage = UIImageView(image: UIImage(named: "background"))
     var weatherModel: Weather!
+    let constraintSize = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupIBOutlets()
+        setupConstraints()
+        setupDetailCityWeather()
+    }
+    
+    func setupIBOutlets() {
         backgroundImage.contentMode = .scaleAspectFill
-        view.addSubview(backgroundImage)
-        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
-        backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        backgroundImage.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        backgroundImage.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         
         mainWeatherView.backgroundColor = .systemGray5
         mainWeatherView.layer.cornerRadius = 25
-        view.addSubview(mainWeatherView)
-        mainWeatherView.translatesAutoresizingMaskIntoConstraints = false
-        mainWeatherView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        mainWeatherView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        mainWeatherView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        mainWeatherView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         weatherIcon.contentMode = .scaleAspectFit
-        weatherIcon.tintColor = #colorLiteral(red: 0.8980392157, green: 0.2156862745, blue: 0.568627451, alpha: 1)
-        mainWeatherView.addSubview(weatherIcon)
-        weatherIcon.translatesAutoresizingMaskIntoConstraints = false
-        weatherIcon.topAnchor.constraint(equalTo: mainWeatherView.topAnchor, constant: 20).isActive = true
-        weatherIcon.bottomAnchor.constraint(equalTo: mainWeatherView.bottomAnchor, constant: -20).isActive = true
-        weatherIcon.leadingAnchor.constraint(equalTo: mainWeatherView.leadingAnchor, constant: 20).isActive = true
-        weatherIcon.trailingAnchor.constraint(equalTo: mainWeatherView.centerXAnchor, constant: -10).isActive = true
         
         temperature.text = "°C"
         temperature.adjustsFontSizeToFitWidth = true
         temperature.numberOfLines = 0
         temperature.font = UIFont(name: "AvenirNext-Medium", size: 65)
         temperature.textColor = UIColor(named: "TextColor")
-        mainWeatherView.addSubview(temperature)
-        temperature.translatesAutoresizingMaskIntoConstraints = false
-        temperature.leadingAnchor.constraint(equalTo: mainWeatherView.centerXAnchor, constant: 10).isActive = true
-        temperature.trailingAnchor.constraint(equalTo: mainWeatherView.trailingAnchor, constant: -20).isActive = true
-        temperature.bottomAnchor.constraint(equalTo: mainWeatherView.centerYAnchor).isActive = true
-        temperature.topAnchor.constraint(equalTo: mainWeatherView.topAnchor, constant: 20).isActive = true
         
         feelsLikeTemperature.text = "Ощущается как"
         feelsLikeTemperature.adjustsFontSizeToFitWidth = true
         feelsLikeTemperature.numberOfLines = 0
         feelsLikeTemperature.font = UIFont(name: "AvenirNext-Regular", size: 15)
         feelsLikeTemperature.textColor = UIColor(named: "TextColor")
-        mainWeatherView.addSubview(feelsLikeTemperature)
-        feelsLikeTemperature.translatesAutoresizingMaskIntoConstraints = false
-        feelsLikeTemperature.leadingAnchor.constraint(equalTo: temperature.leadingAnchor).isActive = true
-        feelsLikeTemperature.trailingAnchor.constraint(equalTo: temperature.trailingAnchor).isActive = true
-        feelsLikeTemperature.topAnchor.constraint(equalTo: mainWeatherView.centerYAnchor).isActive = true
-        feelsLikeTemperature.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         weatherDescription.text = "Описание погоды"
         weatherDescription.adjustsFontSizeToFitWidth = true
         weatherDescription.numberOfLines = 0
         weatherDescription.font = UIFont(name: "AvenirNext-Medium", size: 20)
         weatherDescription.textColor = UIColor(named: "TextColor")
-        mainWeatherView.addSubview(weatherDescription)
-        weatherDescription.translatesAutoresizingMaskIntoConstraints = false
-        weatherDescription.topAnchor.constraint(equalTo: feelsLikeTemperature.bottomAnchor, constant: 10).isActive = true
-        weatherDescription.leadingAnchor.constraint(equalTo: feelsLikeTemperature.leadingAnchor).isActive = true
-        weatherDescription.trailingAnchor.constraint(equalTo: feelsLikeTemperature.trailingAnchor).isActive = true
-        weatherDescription.bottomAnchor.constraint(equalTo: mainWeatherView.bottomAnchor, constant: -20).isActive = true
         
         horizontalView.backgroundColor = .systemGray5
         horizontalView.layer.cornerRadius = 25
         horizontalView.clipsToBounds = true
-        view.addSubview(horizontalView)
-        horizontalView.translatesAutoresizingMaskIntoConstraints = false
-        horizontalView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        horizontalView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        horizontalView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        horizontalView.topAnchor.constraint(equalTo: mainWeatherView.bottomAnchor, constant: 20).isActive = true
         
         horizontalStack.axis = .horizontal
         horizontalStack.distribution = .fillEqually
-        horizontalView.addSubview(horizontalStack)
         horizontalStack.addArrangedSubview(pressureStack)
         horizontalStack.addArrangedSubview(humidityStack)
         horizontalStack.addArrangedSubview(windSpeedStack)
-        horizontalStack.translatesAutoresizingMaskIntoConstraints = false
-        horizontalStack.topAnchor.constraint(equalTo: horizontalView.topAnchor, constant: 20).isActive = true
-        horizontalStack.bottomAnchor.constraint(equalTo: horizontalView.bottomAnchor, constant: -20).isActive = true
-        horizontalStack.leadingAnchor.constraint(equalTo: horizontalView.leadingAnchor, constant: 20).isActive = true
-        horizontalStack.trailingAnchor.constraint(equalTo: horizontalView.trailingAnchor, constant: -20).isActive = true
         
         pressureStack.axis = .vertical
         pressureStack.spacing = 5
@@ -124,7 +80,6 @@ class DetailCityWeatherVC: UIViewController {
         pressureStack.addArrangedSubview(pressure)
         pressureStack.addArrangedSubview(pressureValue)
         pressure.image = UIImage(systemName: "barometer")
-        pressure.tintColor = #colorLiteral(red: 0.8980392157, green: 0.2156862745, blue: 0.568627451, alpha: 1)
         pressure.contentMode = .scaleAspectFill
         pressureValue.text = "мм"
         pressureValue.adjustsFontSizeToFitWidth = true
@@ -138,7 +93,6 @@ class DetailCityWeatherVC: UIViewController {
         humidityStack.addArrangedSubview(humidityValue)
         humidity.image = UIImage(systemName: "drop")
         humidity.contentMode = .scaleAspectFill
-        humidity.tintColor = #colorLiteral(red: 0.8980392157, green: 0.2156862745, blue: 0.568627451, alpha: 1)
         humidityValue.text = "%"
         humidityValue.adjustsFontSizeToFitWidth = true
         humidityValue.font = UIFont(name: "AvenirNext-Regular", size: 20)
@@ -151,12 +105,83 @@ class DetailCityWeatherVC: UIViewController {
         windSpeedStack.addArrangedSubview(windSpeedValue)
         windSpeed.image = UIImage(systemName: "wind")
         windSpeed.contentMode = .scaleAspectFill
-        windSpeed.tintColor = #colorLiteral(red: 0.8980392157, green: 0.2156862745, blue: 0.568627451, alpha: 1)
         windSpeedValue.text = "м/с"
         windSpeedValue.adjustsFontSizeToFitWidth = true
         windSpeedValue.font = UIFont(name: "AvenirNext-Regular", size: 20)
+    }
+    
+    func setupConstraints() {
+        view.addSubview(backgroundImage)
+        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            backgroundImage.heightAnchor.constraint(equalTo: view.heightAnchor),
+            backgroundImage.widthAnchor.constraint(equalTo: view.widthAnchor)
+        ])
         
-        setupDetailCityWeather()
+        view.addSubview(mainWeatherView)
+        mainWeatherView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mainWeatherView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CGFloat(constraintSize)),
+            mainWeatherView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: CGFloat(-constraintSize)),
+            mainWeatherView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: CGFloat(constraintSize)),
+            mainWeatherView.heightAnchor.constraint(equalToConstant: CGFloat(constraintSize * 10))
+        ])
+        
+        mainWeatherView.addSubview(weatherIcon)
+        weatherIcon.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            weatherIcon.topAnchor.constraint(equalTo: mainWeatherView.topAnchor, constant: CGFloat(constraintSize)),
+            weatherIcon.bottomAnchor.constraint(equalTo: mainWeatherView.bottomAnchor, constant: CGFloat(-constraintSize)),
+            weatherIcon.leadingAnchor.constraint(equalTo: mainWeatherView.leadingAnchor, constant: CGFloat(constraintSize)),
+            weatherIcon.trailingAnchor.constraint(equalTo: mainWeatherView.centerXAnchor, constant: CGFloat(-constraintSize / 2))
+        ])
+        
+        mainWeatherView.addSubview(temperature)
+        temperature.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            temperature.leadingAnchor.constraint(equalTo: mainWeatherView.centerXAnchor, constant: CGFloat(constraintSize / 2)),
+            temperature.trailingAnchor.constraint(equalTo: mainWeatherView.trailingAnchor, constant: CGFloat(-constraintSize)),
+            temperature.bottomAnchor.constraint(equalTo: mainWeatherView.centerYAnchor),
+            temperature.topAnchor.constraint(equalTo: mainWeatherView.topAnchor, constant: CGFloat(constraintSize))
+        ])
+        
+        mainWeatherView.addSubview(feelsLikeTemperature)
+        feelsLikeTemperature.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            feelsLikeTemperature.leadingAnchor.constraint(equalTo: temperature.leadingAnchor),
+            feelsLikeTemperature.trailingAnchor.constraint(equalTo: temperature.trailingAnchor),
+            feelsLikeTemperature.topAnchor.constraint(equalTo: mainWeatherView.centerYAnchor),
+            feelsLikeTemperature.heightAnchor.constraint(equalToConstant: CGFloat(constraintSize))
+        ])
+        
+        mainWeatherView.addSubview(weatherDescription)
+        weatherDescription.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            weatherDescription.leadingAnchor.constraint(equalTo: feelsLikeTemperature.leadingAnchor),
+            weatherDescription.trailingAnchor.constraint(equalTo: feelsLikeTemperature.trailingAnchor),
+            weatherDescription.bottomAnchor.constraint(equalTo: mainWeatherView.bottomAnchor, constant: CGFloat(-constraintSize)),
+            weatherDescription.topAnchor.constraint(equalTo: feelsLikeTemperature.bottomAnchor, constant: CGFloat(constraintSize / 2))
+        ])
+        
+        view.addSubview(horizontalView)
+        horizontalView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            horizontalView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CGFloat(constraintSize)),
+            horizontalView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: CGFloat(-constraintSize)),
+            horizontalView.topAnchor.constraint(equalTo: mainWeatherView.bottomAnchor, constant: CGFloat(constraintSize)),
+            horizontalView.heightAnchor.constraint(equalToConstant: CGFloat(constraintSize * 5))
+        ])
+        
+        horizontalView.addSubview(horizontalStack)
+        horizontalStack.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            horizontalStack.topAnchor.constraint(equalTo: horizontalView.topAnchor, constant: CGFloat(constraintSize)),
+            horizontalStack.bottomAnchor.constraint(equalTo: horizontalView.bottomAnchor, constant: CGFloat(-constraintSize)),
+            horizontalStack.leadingAnchor.constraint(equalTo: horizontalView.leadingAnchor, constant: CGFloat(constraintSize)),
+            horizontalStack.trailingAnchor.constraint(equalTo: horizontalView.trailingAnchor, constant: CGFloat(-constraintSize))
+        ])
     }
     
     func setupDetailCityWeather() {

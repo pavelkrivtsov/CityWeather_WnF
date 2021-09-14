@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class CityWeahterCell: UITableViewCell {
     
     var mainStack = UIStackView()
@@ -17,16 +16,15 @@ class CityWeahterCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(mainStack)
-        mainStack.translatesAutoresizingMaskIntoConstraints = false
-        mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
-        mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
-        mainStack.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        
-        mainStack.addArrangedSubview(cityName)
-        mainStack.addArrangedSubview(cityDiscriptionWeather)
-        mainStack.addArrangedSubview(weatherTemperature)
+        setupIBOutlets()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupIBOutlets() {
         mainStack.spacing = 5
         mainStack.axis = .horizontal
         mainStack.distribution = .fill
@@ -40,16 +38,26 @@ class CityWeahterCell: UITableViewCell {
         cityDiscriptionWeather.font = UIFont(name: "AvenirNext-UltraLight", size: 15)
         cityDiscriptionWeather.numberOfLines = 0
         cityDiscriptionWeather.textAlignment = .right
-        cityDiscriptionWeather.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3).isActive = true
         
         weatherTemperature.text = "°C"
         weatherTemperature.font = UIFont(name: "AvenirNext-Regular", size: 20)
         weatherTemperature.textAlignment = .center
-        weatherTemperature.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.15).isActive = true
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func setupConstraints() {
+        self.contentView.addSubview(mainStack)
+        mainStack.translatesAutoresizingMaskIntoConstraints = false
+        mainStack.addArrangedSubview(cityName)
+        mainStack.addArrangedSubview(cityDiscriptionWeather)
+        mainStack.addArrangedSubview(weatherTemperature)
+        NSLayoutConstraint.activate([
+            mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
+            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            cityDiscriptionWeather.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3),
+            weatherTemperature.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.15)
+        ])
     }
     
     func configure(from weather: Weather) {

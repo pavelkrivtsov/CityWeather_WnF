@@ -8,17 +8,7 @@
 import UIKit
 import Network
 
-
 class CityListViewController: UITableViewController {
-    
-    
-    var citiesArray = [Weather]()
-    var filtredCityArray = [Weather]()
-    var cityNamesArray = ["Москва", "Лондон", "Вашингтон", "Пекин", "Токио",
-                          "Сидней", "Кейптаун", "Рио-де-Жанейро", "Бангкок", "Стамбул"]
-    let addButtonAction = UIBarButtonItem(systemItem: .add)
-    let searchController = UISearchController()
-    var networkWeatherManager = NetworkWeatherManager()
     
     var cities: [Weather] {
         isFiltering ? filtredCityArray : citiesArray
@@ -30,8 +20,13 @@ class CityListViewController: UITableViewController {
     var isFiltering: Bool {
         searchController.isActive && !searchBarIsEmpty
     }
-    
-    let titleFont = UILabel()
+    var citiesArray = [Weather]()
+    var filtredCityArray = [Weather]()
+    var cityNamesArray = ["Москва", "Лондон", "Вашингтон", "Пекин", "Токио",
+                          "Сидней", "Кейптаун", "Рио-де-Жанейро", "Бангкок", "Стамбул"]
+    let addButtonAction = UIBarButtonItem(systemItem: .add)
+    let searchController = UISearchController()
+    var networkWeatherManager = NetworkWeatherManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +34,6 @@ class CityListViewController: UITableViewController {
         let label = UILabel()
         label.font = UIFont(name: "SacramentoPro-Regular", size: 34)
         label.textAlignment = .center
-        label.textColor = #colorLiteral(red: 0.8980392157, green: 0.2156862745, blue: 0.568627451, alpha: 1)
         label.text = "City Weather"
         self.navigationItem.titleView = label
         
@@ -107,7 +101,6 @@ class CityListViewController: UITableViewController {
                     self.present(ac, animated: true)
                 } else {
                     let city = cityName.split(separator: " ").joined(separator: "%20")
-                    //
                     self.cityNamesArray.append(city)
                     self.citiesArray.append(Weather())
                     self.addCities()
