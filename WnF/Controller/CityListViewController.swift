@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Network
 
 
 class CityListViewController: UITableViewController {
+    
     
     var citiesArray = [Weather]()
     var filtredCityArray = [Weather]()
@@ -21,7 +23,6 @@ class CityListViewController: UITableViewController {
     var cities: [Weather] {
         isFiltering ? filtredCityArray : citiesArray
     }
-    
     var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
@@ -34,7 +35,7 @@ class CityListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         let label = UILabel()
         label.font = UIFont(name: "SacramentoPro-Regular", size: 34)
         label.textAlignment = .center
@@ -65,6 +66,11 @@ class CityListViewController: UITableViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         navigationItem.hidesSearchBarWhenScrolling = false
+        
+        if NetworkMonitor.shared.isConnected == false {
+            noConnectionAlert()
+            view.backgroundColor = .systemRed
+        }
     }
     
     func addCities() {
@@ -94,13 +100,14 @@ class CityListViewController: UITableViewController {
             if cityName.isEmpty == false {
                 if self.cityNamesArray.contains(cityName) {
                     let ac = UIAlertController(title: "Город есть в списке",
-                                               message: "Попобуйте найти другой город",
+                                               message: "Попробуйте найти другой город",
                                                preferredStyle: .alert)
                     let cansel = UIAlertAction(title: "Отмена", style: .cancel)
                     ac.addAction(cansel)
                     self.present(ac, animated: true)
                 } else {
                     let city = cityName.split(separator: " ").joined(separator: "%20")
+                    //
                     self.cityNamesArray.append(city)
                     self.citiesArray.append(Weather())
                     self.addCities()
@@ -112,8 +119,16 @@ class CityListViewController: UITableViewController {
         present(alertController, animated: true)
     }
     
+    func noConnectionAlert() {
+        let noConnectionAlertController = UIAlertController(title: "Нет соединения с Интернетом",
+                                                            message: "Подключитесь к Интернету и попробуйте еще раз",
+                                                            preferredStyle: .alert)
+        noConnectionAlertController.addAction(UIAlertAction(title: "Хорошо", style: .cancel, handler: nil))
+        self.present(noConnectionAlertController, animated: true)
+    }
     
-    //    MARK: TableView data sourse
+    
+    //    MARK: TableView data sourse, tableView delegate
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         cities.count
@@ -150,6 +165,8 @@ class CityListViewController: UITableViewController {
     }
 }
 
+
+// MARK: Search Results Updating
 
 extension CityListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {

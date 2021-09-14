@@ -15,6 +15,7 @@
 		1E52D6C026E6749D0053F03F /* SacramentoProSlim.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E52D6BF26E6749D0053F03F /* SacramentoProSlim.ttf */; };
 		1E652C3D26E519BA000627F9 /* DetailCityWeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E652C3C26E519BA000627F9 /* DetailCityWeatherVC.swift */; };
 		1E869F9326E6D37D008B1CF6 /* SacramentoPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E869F9226E6D37D008B1CF6 /* SacramentoPro-Regular.ttf */; };
+		1EAF12CB26EF9C38007061FE /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAF12CA26EF9C38007061FE /* NetworkMonitor.swift */; };
 		1EAFA5D726E12AC7006987CC /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAFA5D626E12AC7006987CC /* Constant.swift */; };
 		1EAFA5D926E12DAE006987CC /* NetworkWeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAFA5D826E12DAE006987CC /* NetworkWeatherManager.swift */; };
 		1EAFA5DB26E12E46006987CC /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAFA5DA26E12E46006987CC /* WeatherData.swift */; };
@@ -33,6 +34,7 @@
 		1E52D6BF26E6749D0053F03F /* SacramentoProSlim.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SacramentoProSlim.ttf; sourceTree = "<group>"; };
 		1E652C3C26E519BA000627F9 /* DetailCityWeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCityWeatherVC.swift; sourceTree = "<group>"; };
 		1E869F9226E6D37D008B1CF6 /* SacramentoPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SacramentoPro-Regular.ttf"; sourceTree = "<group>"; };
+		1EAF12CA26EF9C38007061FE /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		1EAFA5D626E12AC7006987CC /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		1EAFA5D826E12DAE006987CC /* NetworkWeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWeatherManager.swift; sourceTree = "<group>"; };
 		1EAFA5DA26E12E46006987CC /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				1E52D6BC26E66DC10053F03F /* View */,
 				1E52D6BD26E66DF00053F03F /* Controller */,
 				1EAFA5D826E12DAE006987CC /* NetworkWeatherManager.swift */,
+				1EAF12CA26EF9C38007061FE /* NetworkMonitor.swift */,
 				1EAFA5D526E129CA006987CC /* Supporting files */,
 			);
 			path = WnF;
@@ -206,6 +209,7 @@
 				1E1FC42526DFF69500F6964A /* SceneDelegate.swift in Sources */,
 				1EE7F7A626E4FA8200F01974 /* CityWeahterCell.swift in Sources */,
 				1EAFA5DB26E12E46006987CC /* WeatherData.swift in Sources */,
+				1EAF12CB26EF9C38007061FE /* NetworkMonitor.swift in Sources */,
 				1EAFA5D726E12AC7006987CC /* Constant.swift in Sources */,
 				1EAFA5DD26E131C1006987CC /* Weather.swift in Sources */,
 			);
