@@ -10,6 +10,7 @@ import Network
 
 class CityListViewController: UITableViewController {
     
+    //    MARK: - Declaring variables
     var cities: [Weather] {
         isFiltering ? filtredCityArray : citiesArray
     }
@@ -25,12 +26,14 @@ class CityListViewController: UITableViewController {
     var cityNamesArray = ["Москва", "Лондон", "Вашингтон", "Пекин", "Токио",
                           "Сидней", "Кейптаун", "Рио-де-Жанейро", "Бангкок", "Стамбул"]
     let addButtonAction = UIBarButtonItem(systemItem: .add)
-    let searchController = UISearchController()
+    let searchController = UISearchController(searchResultsController: nil)
+    let cellRow = 60
     var networkWeatherManager = NetworkWeatherManager()
     
+    //    MARK: - View did load
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         let label = UILabel()
         label.font = UIFont(name: "SacramentoPro-Regular", size: 34)
         label.textAlignment = .center
@@ -45,7 +48,7 @@ class CityListViewController: UITableViewController {
         tableView.register(CityWeahterCell.self, forCellReuseIdentifier: "CityWeahterCell")
         tableView.separatorInset = .zero
         tableView.tableFooterView = UIView()
-        tableView.rowHeight = 60
+        tableView.rowHeight = CGFloat(cellRow)
         
         citiesArray = cityNamesArray.map { cityName in
             var weather = Weather()
@@ -67,6 +70,7 @@ class CityListViewController: UITableViewController {
         }
     }
     
+    //    MARK: - Add cities
     func addCities() {
         networkWeatherManager.getCityWeahter(citiesArray: cityNamesArray) { [weak self] index, weather in
             guard let self = self else { return }
@@ -78,6 +82,7 @@ class CityListViewController: UITableViewController {
         }
     }
     
+    //    MARK: - Add new city weather
     @objc func addNewCityWeather() {
         let alertController = UIAlertController(title: "Добавьте название города", message: nil, preferredStyle: .alert)
         alertController.addTextField { textField in
@@ -112,6 +117,7 @@ class CityListViewController: UITableViewController {
         present(alertController, animated: true)
     }
     
+    //    MARK: - No Connection Alert
     func noConnectionAlert() {
         let noConnectionAlertController = UIAlertController(title: "Нет соединения с Интернетом",
                                                             message: "Подключитесь к Интернету и попробуйте еще раз",
@@ -120,9 +126,7 @@ class CityListViewController: UITableViewController {
         self.present(noConnectionAlertController, animated: true)
     }
     
-    
-    //    MARK: TableView data sourse, tableView delegate
-    
+    //    MARK: - TableView data sourse, tableView delegate
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         cities.count
     }
@@ -159,9 +163,9 @@ class CityListViewController: UITableViewController {
 }
 
 
-// MARK: Search Results Updating
-
+// MARK: - Search Results Updating
 extension CityListViewController: UISearchResultsUpdating {
+    
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
     }
@@ -170,4 +174,5 @@ extension CityListViewController: UISearchResultsUpdating {
         filtredCityArray = citiesArray.filter { $0.name.contains(searchText) }
         tableView.reloadData()
     }
+    
 }

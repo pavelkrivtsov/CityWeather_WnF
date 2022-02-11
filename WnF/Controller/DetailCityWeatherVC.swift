@@ -9,6 +9,7 @@ import UIKit
 
 class DetailCityWeatherVC: UIViewController {
     
+    //    MARK: - Declaring variables
     let mainWeatherView = UIView()
     let newTitleFont = UILabel()
     let weatherIcon = UIImageView()
@@ -30,6 +31,7 @@ class DetailCityWeatherVC: UIViewController {
     var weatherModel: Weather!
     let constraintSize = 20
     
+    //    MARK: - View did load
     override func viewDidLoad() {
         super.viewDidLoad()
         setupIBOutlets()
@@ -37,6 +39,7 @@ class DetailCityWeatherVC: UIViewController {
         setupDetailCityWeather()
     }
     
+    //    MARK: - Setup IBOutlets
     func setupIBOutlets() {
         backgroundImage.contentMode = .scaleAspectFill
         
@@ -110,6 +113,7 @@ class DetailCityWeatherVC: UIViewController {
         windSpeedValue.font = UIFont(name: "AvenirNext-Regular", size: 20)
     }
     
+    //    MARK: - Setup Constraints
     func setupConstraints() {
         view.addSubview(backgroundImage)
         backgroundImage.translatesAutoresizingMaskIntoConstraints = false
@@ -184,6 +188,7 @@ class DetailCityWeatherVC: UIViewController {
         ])
     }
     
+    //    MARK: - Setup DetailCityWeatherVC
     func setupDetailCityWeather() {
         self.temperature.text = "\(weatherModel.temperature)°C"
         self.feelsLikeTemperature.text = "Ощущается как \(weatherModel.feelsLike)°C"
@@ -204,4 +209,5 @@ class DetailCityWeatherVC: UIViewController {
             topItem.backBarButtonItem?.tintColor = .black
         }
     }
+    
 }

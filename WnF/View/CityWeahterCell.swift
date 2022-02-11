@@ -9,11 +9,13 @@ import UIKit
 
 class CityWeahterCell: UITableViewCell {
     
+    //    MARK: - Declaring variables
     var mainStack = UIStackView()
     var cityName = UILabel()
     var cityDiscriptionWeather = UILabel()
     var weatherTemperature = UILabel()
     
+    //    MARK: - Override init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupIBOutlets()
@@ -24,6 +26,7 @@ class CityWeahterCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //    MARK: - Setup IBOutlets
     func setupIBOutlets() {
         mainStack.spacing = 5
         mainStack.axis = .horizontal
@@ -43,7 +46,7 @@ class CityWeahterCell: UITableViewCell {
         weatherTemperature.font = UIFont(name: "AvenirNext-Regular", size: 20)
         weatherTemperature.textAlignment = .center
     }
-    
+    //    MARK: - Setup Constraints
     func setupConstraints() {
         self.contentView.addSubview(mainStack)
         mainStack.translatesAutoresizingMaskIntoConstraints = false
@@ -60,6 +63,7 @@ class CityWeahterCell: UITableViewCell {
         ])
     }
     
+    //    MARK: - Configure CityWeahterCell from Weather
     func configure(from weather: Weather) {
         self.cityName.text = weather.name
         self.cityDiscriptionWeather.text = weather.conditionString
